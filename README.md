@@ -75,4 +75,167 @@ npm install axios
 npm run dev
 ```
 
-## 
+## Alapkomponensek létrehozása
+
+```
+src/
+├─ pages/
+│ ├─ Layout.jsx
+│ ├─ Navigation.jsx
+│ ├─ AdminPage.jsx
+│ └─ PublicPage.jsx
+├─ components/
+│ ├─ admin/
+│ │ └─ UjKerdes.jsx
+│ └─ public/
+
+│ ├─ Kerdes.jsx
+│ ├─ Kerdesek.jsx
+│ └─ Valasz.jsx
+├─ contexts/
+├─ App.css
+├─ App.jsx
+├─ index.css
+└─ main.jsx
+```
+
+## Navigáció és rootolás
+
+1. Telepítsd a react routert!
+
+```
+npm install react-router
+```
+
+2. Hozd létre a pages mappát és benne a Public.jsx és az Admin.jsx komponenseket. 
+3. Szükség lesz egy Layout.jsx komponensre és egy Navigation.jsx komponensre. 
+4. A Navigation.jsx-ben alakítjuk ki a menüt a NavLink segítségével. 
+5. A Layoutban alakítjuk aki az oldal szerkezetét. 
+6. Az App.jsx csak a routingot fogja tartalmazni, azaz az oldallinkek és a page-ek összerendezését. 
+
+### Navigation.jsx
+
+A navigáció elkészítése **a** tag helyett NavLink segítségével. 
+
+```javascript
+import { NavLink } from "react-router";
+
+function Navigation() {
+  return (
+    <nav className="">
+      <ul className="nav">
+        <li class="nav-item">
+          <NavLink
+            to="/"
+            className={({ isActive }) =>
+              isActive ? "nav-link  active" : "nav-link "
+            }
+          >
+            Összes Quiz
+          </NavLink>
+        </li>
+        <li class="nav-item">
+          <NavLink
+            to="/ujquiz"
+            className={({ isActive }) =>
+              isActive ? "nav-link  active" : "nav-link "
+            }
+          >
+            Új kérdés
+          </NavLink>
+        </li>
+      </ul>
+    </nav>
+  );
+}
+
+export default Navigation;
+```
+
+### Layout.jsx
+
+Itt alakítom ki az oldal szerkezetét
+
+```javascript
+import { Outlet } from "react-router";
+import Navigation from "./Navigation";
+
+function Layout() {
+  return (
+    <main className="container">
+      <header>
+        <Navigation />
+      </header>
+
+      <article className="">
+        <Outlet />
+      </article>
+
+      <footer >
+        <p>Készítette: Cséfalvay Katalin</p>
+      </footer>
+    </main>
+  );
+}
+
+export default Layout;
+```
+
+### Router dom használata az App.jsx-ben
+
+```javascript
+import { createBrowserRouter, Navigate, RouterProvider } from 'react-router';
+import './App.css'
+import PublicPage from './pages/PublicPage';
+import AdminPage from './pages/AdminPage';
+import Layout from './pages/Layout';
+
+const router = createBrowserRouter([
+  
+  //route-ok Layout-tal
+  {
+    path: "/",
+    element: <Layout />,   
+    children: [
+      {
+        index: true, // Főoldal átirányítás dashboard-ra
+        element: <Navigate to="/kezdolap" replace />,
+      },
+      {
+        path: "kezdolap",
+        element: <PublicPage />,
+      },
+      {
+        path: "ujquiz",
+        children: [
+          {
+            index: true,
+            element: <AdminPage />,
+          }
+        ],
+      }
+    ],
+  },
+
+  // 404 - Not Found
+  {
+    path: "*",
+    element: (
+      <div style={{ padding: "2rem", textAlign: "center" }}>
+        <h1>404 - Az oldal nem található</h1>
+        <a href="/login">Vissza a főoldalra</a>
+      </div>
+    ),
+  },
+]);
+
+
+function App() {
+  return (
+      <RouterProvider router={router} />
+  );
+}
+
+export default App;
+
+```
