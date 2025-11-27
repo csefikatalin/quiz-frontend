@@ -1,14 +1,19 @@
 import React from "react";
 import Valasz from "./Valasz";
 
-export default function Kerdes() {
+export default function Kerdes({ kerdes }) {
+ 
   return (
-    <div>
-      <h3>Ez egy kérdés</h3>
-      <Valasz />
-      <Valasz />
-      <Valasz />
-      <Valasz />
+    <div className="card  m-2">
+        <div class="card-body">
+      <h5 className="card-title">{kerdes.question_text}</h5>
+
+      <ul className="row g-2 p-0">
+        {kerdes.answers.map((valasz) => (
+          <Valasz key={valasz.id} valasz={valasz} />
+        ))}
+      </ul>
+      </div>
     </div>
   );
 }

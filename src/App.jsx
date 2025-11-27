@@ -1,19 +1,15 @@
-
-
-import { createBrowserRouter, Navigate, RouterProvider } from 'react-router';
-import './App.css'
-import PublicPage from './pages/PublicPage';
-import AdminPage from './pages/AdminPage';
-import Layout from './pages/Layout';
-
-
+import { createBrowserRouter, Navigate, RouterProvider } from "react-router";
+import "./App.css";
+import PublicPage from "./pages/PublicPage";
+import AdminPage from "./pages/AdminPage";
+import Layout from "./pages/Layout";
+import { KerdesekProvider } from "./contexts/KerdesekContext";
 
 const router = createBrowserRouter([
-  
   //route-ok Layout-tal
   {
     path: "/",
-    element: <Layout />,   
+    element: <Layout />,
     children: [
       {
         index: true, // Főoldal átirányítás dashboard-ra
@@ -29,9 +25,9 @@ const router = createBrowserRouter([
           {
             index: true,
             element: <AdminPage />,
-          }
+          },
         ],
-      }
+      },
     ],
   },
 
@@ -47,12 +43,12 @@ const router = createBrowserRouter([
   },
 ]);
 
-
 function App() {
   return (
+    <KerdesekProvider>
       <RouterProvider router={router} />
+    </KerdesekProvider>
   );
 }
 
 export default App;
-

@@ -4,7 +4,7 @@ function Navigation() {
   return (
     <nav className="">
       <ul className="nav">
-        <li class="nav-item">
+        <li className="nav-item">
           <NavLink
             to="/"
             className={({ isActive }) =>
@@ -14,7 +14,7 @@ function Navigation() {
             Összes Quiz
           </NavLink>
         </li>
-        <li class="nav-item">
+        <li className="nav-item">
           <NavLink
             to="/ujquiz"
             className={({ isActive }) =>

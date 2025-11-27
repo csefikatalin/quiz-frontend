@@ -21,6 +21,48 @@ Készíts olyan programot, mely segítségével egy quizt készíthetünk.
 - A programban nincs bejelentkezés, felhasználókezelés, de elmenthetjük a quiz eredményét.
 - Első körben nyilvános (nem védett) API végpontokat kell készíteni. 
 
+## Elméleti áttekintés
+
+### Mi az a REST API?
+
+A **REST** (Representational State Transfer) egy architekturális stílus web szolgáltatások készítésére. A REST API-k HTTP protokollon keresztül kommunikálnak, és szabványos HTTP metódusokat használnak:
+
+- **GET**: Adatok lekérése (olvasás)
+- **POST**: Új adat létrehozása
+- **PUT**: Meglévő adat teljes frissítése
+- **PATCH**: Meglévő adat részleges frissítése
+- **DELETE**: Adat törlése
+
+#### Példa REST API végpontok
+
+```
+GET    /api/questions           # összes kérdés lekérdezése
+POST   /api/question            # Új kérdés hozzáadása az adatbázishoz     
+```
+
+### HTTP státuszkódok
+
+A szerver válaszai státuszkódokkal jelzik a kérés eredményét:
+
+#### 2xx - Sikeres válaszok
+
+- **200 OK**: Sikeres GET, PUT, PATCH kérés
+- **201 Created**: Sikeres POST kérés, új erőforrás létrehozva
+- **204 No Content**: Sikeres kérés, de nincs visszaadandó adat
+
+#### 4xx - Kliens oldali hibák
+
+- **400 Bad Request**: Hibás kérés formátum (pl. hiányos vagy helytelen adatok)
+- **401 Unauthorized**: Hiányzó vagy érvénytelen hitelesítés (token)
+- **403 Forbidden**: Nincs jogosultság a művelethez (pl. már beiratkozott kurzus)
+- **404 Not Found**: A kért erőforrás nem található
+- **422 Unprocessable Entity**: Validációs hiba (pl. nem elég kredit)
+
+#### 5xx - Szerver oldali hibák
+
+- **500 Internal Server Error**: Általános szerver hiba
+- **502 Bad Gateway**: Gateway hiba
+- **503 Service Unavailable**: A szolgáltatás átmenetileg nem elérhető
 
 ## React telepítése Vite-vel
 
@@ -239,3 +281,56 @@ function App() {
 export default App;
 
 ```
+
+## Adatok lekérdezése a végpontról
+
+1. KerdesekContext.jsx létrehozása az alapszerkezettel
+ ```javascript
+import axios from "axios";
+import { createContext, useState, useEffect } from "react";
+
+// 1. Context létrehozása
+export const KerdesekContext = createContext();
+
+// 2. Provider komponens
+export function KerdesekProvider({ children }) {
+  const [loading, setLoading] = useState(true);
+  const [kerdesekLista, setKerdesekLista] = useState([])
+
+  return (
+    <KerdesekContext.Provider value={kerdesekLista}>
+      {children}
+    </KerdesekContext.Provider>
+  );
+}
+```
+
+2. aszinkron hívás indítása axios-szal
+
+ ```javascript
+
+    function getKerdesek() {
+        axios.get('http://127.0.0.1:8000/api/questions')
+            .then(function (response) {
+                // handle success
+                console.log(response.data);
+                setKerdesekLista(response.data)
+            })
+            .catch(function (error) {
+                // handle error
+                console.log(error);
+            })
+            .finally(function () {
+                // always executed
+            });
+    }
+ 
+```
+
+3. App.jsx-ben ölelgetés
+4. context felhasználása a komponensekben ( Kerdesek,jsx)
+
+## Hibakezelés
+
+
+
