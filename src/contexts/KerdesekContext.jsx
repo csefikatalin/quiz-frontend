@@ -20,6 +20,9 @@ export function KerdesekProvider({ children }) {
 
     setKerdesekLista(kevertLista);
   }
+  function postPontom(formAdat){
+    console.log(formAdat)
+  }
   function getKerdesek() {
     axios
       .get("http://127.0.0.1:8000/api/questions")
@@ -41,7 +44,7 @@ export function KerdesekProvider({ children }) {
   }, []);
 
   return (
-    <KerdesekContext.Provider value={{ kerdesekLista, loading, pont, setPont }}>
+    <KerdesekContext.Provider value={{ kerdesekLista, loading, pont, setPont, postPontom }}>
       {children}
     </KerdesekContext.Provider>
   );

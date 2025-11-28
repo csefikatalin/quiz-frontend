@@ -13,7 +13,7 @@ export default function Kerdesek() {
     return <div>Nincsenek kérdések.</div>;
   }
 return (
-    <div>
+    <div className="">
       <h2>Kérdések</h2> 
       <p>Elért pontszám: {pont}</p>
       <div className="card">
