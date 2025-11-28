@@ -75,4 +75,10 @@ npm install axios
 npm run dev
 ```
 
-## 
+## Alap mappaszerkezet
+
+## Routing - menü kialakítása
+
+## Context használata, kérdések megjelenítése
+
+## Pont beküldése
