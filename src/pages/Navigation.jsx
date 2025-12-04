@@ -14,6 +14,16 @@ function Navigation() {
             Összes Quiz
           </NavLink>
         </li>
+         <li className="nav-item">
+          <NavLink
+            to="/toplista"
+            className={({ isActive }) =>
+              isActive ? "nav-link  active" : "nav-link "
+            }
+          >
+            Toplista
+          </NavLink>
+        </li>
         <li className="nav-item">
           <NavLink
             to="/ujquiz"

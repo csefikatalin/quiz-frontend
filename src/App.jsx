@@ -4,6 +4,8 @@ import PublicPage from "./pages/PublicPage";
 import AdminPage from "./pages/AdminPage";
 import Layout from "./pages/Layout";
 import { KerdesekProvider } from "./contexts/KerdesekContext";
+import UserPage from "./pages/UserPage";
+import { UserProvider } from "./contexts/UsersContext";
 
 const router = createBrowserRouter([
   //route-ok Layout-tal
@@ -20,13 +22,12 @@ const router = createBrowserRouter([
         element: <PublicPage />,
       },
       {
+        path: "toplista",
+        element: <UserPage />,
+      },
+      {
         path: "ujquiz",
-        children: [
-          {
-            index: true,
-            element: <AdminPage />,
-          },
-        ],
+        element: <AdminPage />,
       },
     ],
   },
@@ -46,7 +47,9 @@ const router = createBrowserRouter([
 function App() {
   return (
     <KerdesekProvider>
+      <UserProvider>
       <RouterProvider router={router} />
+      </UserProvider>
     </KerdesekProvider>
   );
 }
