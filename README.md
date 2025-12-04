@@ -13,6 +13,7 @@ Készíts olyan programot, mely segítségével egy quizt készíthetünk.
     - helytelen válasz esetén pirosra. 
 6. A rendszer számolja a pontokat, melyet a quiz végén el is lehet menteni. Ekkor meg kell adni egy nevet, a rendszer a névhez elmenti a quiz nehézségi szintjét (könnyű, közepes, nehéz, vegyes), és a pontszámot. 
 7. Az elmentett pontszámok alapján lehet toplistát megjeleníteni. 
+8. Lehet választani a nehézségi szintek között.
 
 ### Egyszerűsítések: 
 
@@ -21,6 +22,48 @@ Készíts olyan programot, mely segítségével egy quizt készíthetünk.
 - A programban nincs bejelentkezés, felhasználókezelés, de elmenthetjük a quiz eredményét.
 - Első körben nyilvános (nem védett) API végpontokat kell készíteni. 
 
+## Elméleti áttekintés
+
+### Mi az a REST API?
+
+A **REST** (Representational State Transfer) egy architekturális stílus web szolgáltatások készítésére. A REST API-k HTTP protokollon keresztül kommunikálnak, és szabványos HTTP metódusokat használnak:
+
+- **GET**: Adatok lekérése (olvasás)
+- **POST**: Új adat létrehozása
+- **PUT**: Meglévő adat teljes frissítése
+- **PATCH**: Meglévő adat részleges frissítése
+- **DELETE**: Adat törlése
+
+#### Példa REST API végpontok
+
+```
+GET    /api/questions           # összes kérdés lekérdezése
+POST   /api/question            # Új kérdés hozzáadása az adatbázishoz     
+```
+
+### HTTP státuszkódok
+
+A szerver válaszai státuszkódokkal jelzik a kérés eredményét:
+
+#### 2xx - Sikeres válaszok
+
+- **200 OK**: Sikeres GET, PUT, PATCH kérés
+- **201 Created**: Sikeres POST kérés, új erőforrás létrehozva
+- **204 No Content**: Sikeres kérés, de nincs visszaadandó adat
+
+#### 4xx - Kliens oldali hibák
+
+- **400 Bad Request**: Hibás kérés formátum (pl. hiányos vagy helytelen adatok)
+- **401 Unauthorized**: Hiányzó vagy érvénytelen hitelesítés (token)
+- **403 Forbidden**: Nincs jogosultság a művelethez (pl. már beiratkozott kurzus)
+- **404 Not Found**: A kért erőforrás nem található
+- **422 Unprocessable Entity**: Validációs hiba (pl. nem elég kredit)
+
+#### 5xx - Szerver oldali hibák
+
+- **500 Internal Server Error**: Általános szerver hiba
+- **502 Bad Gateway**: Gateway hiba
+- **503 Service Unavailable**: A szolgáltatás átmenetileg nem elérhető
 
 ## React telepítése Vite-vel
 
@@ -75,10 +118,47 @@ npm install axios
 npm run dev
 ```
 
-## Alap mappaszerkezet
+## Alapkomponensek létrehozása
 
-## Routing - menü kialakítása
+```
+src/
+├─ pages/
+│ ├─ Layout.jsx
+│ ├─ Navigation.jsx
+│ ├─ AdminPage.jsx
+│ └─ PublicPage.jsx
+├─ components/
+│ ├─ admin/
+│ │ └─ UjKerdes.jsx
+│ └─public/
+│   ├─ TopLista.jsx
+│   ├─ Kerdes.jsx
+│   ├─ Kerdesek.jsx
+│   └─ Valasz.jsx
+├─ contexts/
+├─ App.css
+├─ App.jsx
+├─ index.css
+└─ main.jsx
+```
 
-## Context használata, kérdések megjelenítése
+## <a href="Router.md">React router használata</a>
 
-## Pont beküldése
+A React Router a React leggyakrabban használt routing könyvtára, amely lehetővé teszi, hogy egy SPA (Single Page Application) többoldalasnak tűnjön.
+Valójában nem töltődik újra az oldal, csak komponenseket cserélünk a cím alapján.
+
+
+## <a href="Context.md">Context használata</a>
+
+A React Context arra való, hogy adatokat vagy függvényeket globálisan megosszunk több komponens között, anélkül hogy props-on keresztül kellene őket minden szinten továbbadni.
+
+A Context egy globális állapot vagy globális adattár, amit a fa bármelyik komponense közvetlenül elérhet, ha feliratkozik rá.
+
+1. Context létrehozása
+2. A provider value objektumában megadjuk azokat a változókat és függvényeket, melyek használatát engedélyezzük a gyerek komponensekben.
+3. Provider körbeöleli a komponenseket 
+4. useContext segítségével a gyerekkomponensben elérhetjük a value-ban megadott változókat és függvényeket. 
+
+## Űrlap - kontrollált komponensek
+
+## Navigáció paraméter alapján
