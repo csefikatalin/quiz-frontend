@@ -5,7 +5,7 @@ import Pontom from "../components/public/Pontom";
 
 export default function PublicPage() {
   const { kerdesekLista } = useContext(KerdesekContext);
-  console.log(kerdesekLista);
+  
   return (
     <div>
       <Kerdesek />

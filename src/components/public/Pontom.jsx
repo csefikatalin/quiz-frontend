@@ -5,14 +5,20 @@ export default function Pontom() {
     const {pont, postPontom}=useContext(KerdesekContext)
     const [name, setName]=useState("")
 
-    function kuld(){
-        console.log("küldés")
+    function kuld(event){
+      event.preventDefault()
+    
+        const formAdat={
+          name:name,
+          point:Number(pont)
+        }
+        postPontom(formAdat)
     }
   return (
     <div className="border mt-3 p-3">
       <form onSubmit={kuld}>
         <div className="mb-3">
-          <label for="name" className="form-label">
+          <label htmlFor="name" className="form-label">
             Add meg a neved!
           </label>
           <input

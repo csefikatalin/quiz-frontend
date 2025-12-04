@@ -5,7 +5,7 @@ export default function Kerdes({ kerdes }) {
  
   return (
     <div className="card  m-2">
-        <div class="card-body">
+        <div className="card-body">
       <h5 className="card-title">{kerdes.question_text}</h5>
 
       <ul className="row g-2 p-0">
