@@ -1,13 +1,16 @@
 import React, { useContext, useState } from "react";
 import { KerdesekContext } from "../../contexts/KerdesekContext";
 
-export default function Valasz({ valasz }) {
+export default function Valasz({ valasz, valaszolt, valszKezeles }) {
   const [helyes, setHelyes] = useState(null);
   const { setPont } = useContext(KerdesekContext);
   function kivalaszt() {
+    if (!valaszolt){
     setHelyes(valasz.right_answer);
      if (valasz.right_answer) {
       setPont(prev => prev + 1); 
+    }
+    valszKezeles()
     }
   }
   const bgColor = helyes === null ? "white" : helyes ? "lightgreen" : "salmon";
