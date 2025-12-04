@@ -1,14 +1,16 @@
 import React from "react";
 import { KerdesekContext } from "../../contexts/KerdesekContext";
 import { useContext } from "react";
+import { useNavigate } from "react-router";
 
 export default function KerdesSor({ kerdes }) {
   const { deleteKerdes } = useContext(KerdesekContext);
+  const navigate = useNavigate();
   function torol() {
     deleteKerdes(kerdes.id);
   }
   function kivalaszt() {
-    
+      navigate(`/kerdes/${kerdes.id}`, { state: { kerdes } });
   }
 
   return (

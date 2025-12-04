@@ -7,12 +7,14 @@ import { KerdesekProvider } from "./contexts/KerdesekContext";
 import UserPage from "./pages/UserPage";
 import { UserProvider } from "./contexts/UsersContext";
 import AdminKerdesek from "./pages/AdminKerdesek";
+import KerdesReszletek from "./components/admin/KerdesReszletek";
 
 const router = createBrowserRouter([
   //route-ok Layout-tal
   {
     path: "/",
     element: <Layout />,
+     
     children: [
       {
         index: true, // Főoldal átirányítás dashboard-ra
@@ -34,6 +36,8 @@ const router = createBrowserRouter([
         path: "adminkerdesek",
         element: <AdminKerdesek />,
       },
+       { path: "kerdes/:id", element: <KerdesReszletek /> }, 
+     
     ],
   },
 
