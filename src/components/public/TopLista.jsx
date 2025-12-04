@@ -1,9 +1,13 @@
 import React from "react";
 import { UserContext } from "../../contexts/UsersContext";
 import { useContext } from "react";
+import { useEffect } from "react";
 
 export default function TopLista() {
-  const { loading, userLista } = useContext(UserContext);
+  const { loading, userLista, getUser } = useContext(UserContext);
+    useEffect(() => {
+    getUser();
+  }, []);
   const top10 = [...userLista]
   .sort((a, b) => b.point - a.point) // csökkenő sorrend pont szerint
   .slice(0, 10); // első 10 elem

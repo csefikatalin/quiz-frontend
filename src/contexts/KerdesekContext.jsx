@@ -32,6 +32,18 @@ export function KerdesekProvider({ children }) {
         console.log(error);
       });
   }
+  function postKerdes(formAdat){
+    console.log(formAdat)
+
+    axios
+      .post("http://127.0.0.1:8000/api/question", formAdat)
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
   function getKerdesek() {
     axios
       .get("http://127.0.0.1:8000/api/questions")
@@ -53,7 +65,7 @@ export function KerdesekProvider({ children }) {
   }, []);
 
   return (
-    <KerdesekContext.Provider value={{ kerdesekLista, loading, pont, setPont, postPontom }}>
+    <KerdesekContext.Provider value={{ kerdesekLista, loading, pont, setPont, postPontom,postKerdes }}>
       {children}
     </KerdesekContext.Provider>
   );

@@ -26,12 +26,10 @@ export function UserProvider({ children }) {
         setLoading(false)
       });
   }
-  useEffect(() => {
-    getUser();
-  }, []);
+
 
   return (
-    <UserContext.Provider value={{ userLista, loading }}>
+    <UserContext.Provider value={{ userLista, loading, getUser }}>
       {children}
     </UserContext.Provider>
   );
