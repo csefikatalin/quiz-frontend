@@ -31,7 +31,17 @@ function Navigation() {
               isActive ? "nav-link  active" : "nav-link "
             }
           >
-            Új kérdés
+            Admin - Új kérdés
+          </NavLink>
+        </li>
+         <li className="nav-item">
+          <NavLink
+            to="/adminkerdesek"
+            className={({ isActive }) =>
+              isActive ? "nav-link  active" : "nav-link "
+            }
+          >
+            Admin - Kérdések listázása
           </NavLink>
         </li>
       </ul>

@@ -20,8 +20,8 @@ export function KerdesekProvider({ children }) {
 
     setKerdesekLista(kevertLista);
   }
-  function postPontom(formAdat){
-    console.log(formAdat)
+  function postPontom(formAdat) {
+    console.log(formAdat);
 
     axios
       .post("http://127.0.0.1:8000/api/user", formAdat)
@@ -32,8 +32,8 @@ export function KerdesekProvider({ children }) {
         console.log(error);
       });
   }
-  function postKerdes(formAdat){
-    console.log(formAdat)
+  function postKerdes(formAdat) {
+    console.log(formAdat);
 
     axios
       .post("http://127.0.0.1:8000/api/question", formAdat)
@@ -48,9 +48,9 @@ export function KerdesekProvider({ children }) {
     axios
       .get("http://127.0.0.1:8000/api/questions")
       .then(function (response) {
-        //setKerdesekLista(response.data);
+        /*    setKerdesekLista(response.data); */
         setLoading(false);
-        valaszokKeverese(response.data) 
+        valaszokKeverese(response.data);
       })
       .catch(function (error) {
         // handle error
@@ -64,8 +64,29 @@ export function KerdesekProvider({ children }) {
     getKerdesek();
   }, []);
 
+  function deleteKerdes(id) {
+    axios
+      .delete(`http://127.0.0.1:8000/api/question/${id}`)
+      .then((response) => {console.log("Delete successful", response.data)
+        setKerdesekLista(prev => prev.filter(k => k.id !== id));
+      })
+      .catch((error) => {
+        console.error("There was an error!", error);
+      });
+  }
   return (
-    <KerdesekContext.Provider value={{ kerdesekLista, loading, pont, setPont, postPontom,postKerdes }}>
+    <KerdesekContext.Provider
+      value={{
+        deleteKerdes,
+        kerdesekLista,
+        loading,
+        pont,
+        setPont,
+        postPontom,
+        postKerdes,
+        valaszokKeverese,
+      }}
+    >
       {children}
     </KerdesekContext.Provider>
   );

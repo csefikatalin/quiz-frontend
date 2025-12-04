@@ -6,6 +6,7 @@ import Layout from "./pages/Layout";
 import { KerdesekProvider } from "./contexts/KerdesekContext";
 import UserPage from "./pages/UserPage";
 import { UserProvider } from "./contexts/UsersContext";
+import AdminKerdesek from "./pages/AdminKerdesek";
 
 const router = createBrowserRouter([
   //route-ok Layout-tal
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
       {
         path: "ujquiz",
         element: <AdminPage />,
+      },
+      {
+        path: "adminkerdesek",
+        element: <AdminKerdesek />,
       },
     ],
   },
